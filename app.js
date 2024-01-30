@@ -8,11 +8,16 @@ const blogRoutes = require('./routes/blogRoutes');
 const app = express();
 
 const dbURI = `mongodb+srv://netninja:test1234@cluster0.lgllxcm.mongodb.net/node-tuts?retryWrites=true&w=majority`;
-mongoose.connect(dbURI, {useNewUrlParser: true, useUnifiedTopology:true})
-  .then((result)=>app.listen(3000,function(){
-    console.log("Server is running on port 3000")
-  }))
-  .catch((err)=>console.log(err));
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+
+    // Start the server after successful MongoDB connection
+    app.listen(process.env.PORT || 3000, function () {
+      console.log('Server is running on port ' + (process.env.PORT || 3000));
+    });
+  })
+  .catch((err) => console.error('Error connecting to MongoDB:', err));
 
 
 // register view engine
